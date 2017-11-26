@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\cib0020\.android\build-cache\8ff470bfc6e19dd38dfd7fccd6f02833bef28b7d\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="88246166d5afb106f532f6e6deae683c66b42c89">
+        <dex dex="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_03412fd22f8870a24ea4a976a5748d9ac87ddba6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="6403c687f1e1fb1030e54468b512ebe7312dd087">
+        <dex dex="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_ac10ae6de1633bf4c7e5b12195eefadcc0f39b36\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_fbaa9f5e70cae5eae26aba7a85ca71b9d12330b8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\cib0020\.android\build-cache\755d50a8a1ac1e9de0da4d0f946e8b3ad450622e\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="2e92aa0163544a804a0b34f169ca61801770839a">
+        <dex dex="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9e1423713da63c3e9c413965e108a8caa7e008b4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\cib0020\.android\build-cache\796af4f4149abf6ef5a76fd27dd70a9af0a80b73\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="952944218ecedea1554a513dec0c14d570642843">
+        <dex dex="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_99c0a26945a8d137791f60649612e7e51812f70e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\cib0020\.android\build-cache\262cae8a5596089e2bb2f590a29565a44195f4b8\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="9935891f23923f39d002087085d9696568a9f657">
+        <dex dex="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9f17de29cb147ff1416ea661ed7cd5b0f60b3451\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\cib0020\.android\build-cache\c80cac149abe7ffb28d4c68f5baf40849987dd6c\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="47471eb19df288158b00b8d9cfa41bce7373f5cc">
+        <dex dex="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ae8e586cb8bd25f84780556959846261b5062cc7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\cib0020\.android\build-cache\dfc55a15b69b58481400b2e2f9df56c14592ca32\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_23d0f603baadb94044d47027c5a78de458561c4a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\cib0020\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\26.0.0-alpha1\support-annotations-26.0.0-alpha1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="023ee503b631f69511e335a061ea008f8da60f40">
+        <dex dex="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-26.0.0-alpha1_8c359e6c4f564f36529455b1d2064fe27a0ac0d6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\cib0020\.android\build-cache\d8d6f072868d912622cc66a70ccdcf3f063dc637\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="fcd01fd11233459f546c437ec927e9b61bf7caf1">
+        <dex dex="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e0526389a518f49b51f38ddff7aa5aec283dbdd8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\cib0020\.android\build-cache\59a3284f5711bf869e6a2b537412df57ccc9ed2b\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="8df0e365e40beb151bc42dee20817721a6cab7b0">
+        <dex dex="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_79a3b1402c9b5834dd1760ec86017e7770026bfa\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\cib0020\.android\build-cache\43bc33403a1d9ff8e8133ca981659d72a3cb66d7\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="18d31838aa4fcc768a8a0516e22cc13b94655d89">
+        <dex dex="D:\Dokumenty\TAMZII\tamz-ii-poznamky\tamz-ii-poznamky\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_1bc0adf508711a70a3275766513f18a72689b50c\classes.dex" />
+    </item>
+
+</items>
