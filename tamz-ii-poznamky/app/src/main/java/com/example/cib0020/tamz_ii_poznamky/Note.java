@@ -1,3 +1,5 @@
+package com.example.cib0020.tamz_ii_poznamky;
+
 /**
  * Created by cib0020 on 26.11.2017.
  */
@@ -27,15 +29,13 @@ public class Note {
         return this._title;
     }
 
-    public void getTitle(String title){
-        this._title = title;
-    }
+    public void setTitle(String title) { this._title = title; };
 
     public String getText(){
         return this._title;
     }
 
-    public void setTest(String text){
+    public void setText(String text){
         this._text = text;
     }
 }
