@@ -1,10 +1,14 @@
 package com.example.cib0020.tamz_ii_poznamky;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by cib0020 on 26.11.2017.
  */
 
-public class Note {
+public class Note implements Serializable{
     private int _id;
     private String _title;
     private String _text;

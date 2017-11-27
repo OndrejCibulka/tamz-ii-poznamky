@@ -11,19 +11,23 @@ import org.w3c.dom.Text;
 
 public class NoteDetailActivity extends AppCompatActivity {
 
+    boolean editing = false;
+    Note note = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_detail);
 
         Intent intent = getIntent();
-        if (intent.hasExtra("note_title")) {
+        if (intent.hasExtra("note")) {
+            note = (Note) intent.getSerializableExtra("note");
+
             TextView textViewTitle = (TextView) findViewById(R.id.editText_title);
-            textViewTitle.setText(intent.getStringExtra("note_title"));
-        }
-        if (intent.hasExtra("note_text")) {
             TextView textViewText = (TextView) findViewById(R.id.editText_text);
-            textViewText.setText(intent.getStringExtra("note_text"));
+            textViewTitle.setText(note.getTitle());
+            textViewText.setText(note.getText());
+
+            editing = true;
         }
 
 
@@ -34,9 +38,17 @@ public class NoteDetailActivity extends AppCompatActivity {
                 TextView textViewTitle = (TextView) findViewById(R.id.editText_title);
                 TextView textViewText = (TextView) findViewById(R.id.editText_text);
 
-                Note note = new Note(1, textViewTitle.getText().toString(), textViewText.getText().toString());
                 DatabaseHandler db = new DatabaseHandler(NoteDetailActivity.this);
-                db.addNote(note);
+
+                if (editing) {
+                    note.setTitle(textViewTitle.getText().toString());
+                    note.setText(textViewText.getText().toString());
+                    db.updateNote(note);
+                } else {
+                    Note note = new Note(1, textViewTitle.getText().toString(), textViewText.getText().toString());
+                    db.addNote(note);
+                }
+
                 setResult(0);
                 finish();
             }

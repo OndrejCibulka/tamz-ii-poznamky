@@ -2,6 +2,7 @@ package com.example.cib0020.tamz_ii_poznamky;
 
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, NoteDetailActivity.class);
-                intent.putExtra("note_title", listNotes.get(position).getTitle());
-                intent.putExtra("note_text", listNotes.get(position).getText());
+                intent.putExtra("note", (Serializable) listNotes.get(position));
                 startActivityForResult(intent, NOTE_DETAIL_REQUEST);
             }
         });
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if(resultCode == MainActivity.NOTE_DETAIL_REQUEST){
-            Toast.makeText(this, "Poznámka byla vytvořena!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Poznámka byla uložena!", Toast.LENGTH_LONG).show();
             MainActivity.this.refreshList();
         }
     }
