@@ -104,4 +104,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteAllNotes() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NOTES, KEY_ID + " > ?", new String[] {"-1"});
+
+        db.close();
+    }
+
 }

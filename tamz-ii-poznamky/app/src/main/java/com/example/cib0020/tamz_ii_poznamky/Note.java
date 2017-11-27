@@ -32,7 +32,7 @@ public class Note {
     public void setTitle(String title) { this._title = title; };
 
     public String getText(){
-        return this._title;
+        return this._text;
     }
 
     public void setText(String text){
