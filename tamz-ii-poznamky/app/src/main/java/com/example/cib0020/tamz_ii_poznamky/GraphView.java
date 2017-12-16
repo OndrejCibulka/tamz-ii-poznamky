@@ -17,9 +17,6 @@ public class GraphView extends View {
         super(context);
     }
 
-//    100 - 60 = 40
-//    20
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -28,7 +25,7 @@ public class GraphView extends View {
         List<Note> notes = db.getAllNotes();
 
         int maxLength = 0;
-        int countLetters = 0;
+        long countLetters = 0;
         for (Integer i = 0; i < notes.size(); i++) {
             if(notes.get(i).getText().length() > maxLength){
                 maxLength = notes.get(i).getText().length();

@@ -35,6 +35,8 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
     private Sensor mySensor;
     private SensorManager SM;
 
+    long last = System.currentTimeMillis();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +85,7 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
 //      nastavení senzorů
         SM = (SensorManager)getSystemService(SENSOR_SERVICE);
         mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        SM.registerListener(this, mySensor, 1000000);
+        SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -167,14 +169,22 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+        long now = System.currentTimeMillis();
 
         if(sensorEvent.values[0] < -15) // pohnutí doprava
         {
-            displayPreviousNote();
+            if ((now - last) > 1000) {
+                displayPreviousNote();
+                last = now;
+            }
         } else if (sensorEvent.values[0] > 15) // pohnutí doleva
         {
-            dispayNextNote();
+            if ((now - last) > 1000) {
+                dispayNextNote();
+                last = now;
+            }
         }
+
     }
 
     @Override
