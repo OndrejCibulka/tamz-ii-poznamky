@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Note getNote(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_NOTES, new String[] { KEY_ID, KEY_TITLE, KEY_TEXT }, KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NOTES, new String[]{KEY_ID, KEY_TITLE, KEY_TEXT}, KEY_ID + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
@@ -81,7 +82,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 note.setText(cursor.getString(2));
 
                 noteList.add(note);
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
         return noteList;
@@ -94,21 +95,78 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TITLE, note.getTitle());
         values.put(KEY_TEXT, note.getText());
 
-        return db.update(TABLE_NOTES, values, KEY_ID + " = ?", new String[] { String.valueOf(note.getID())});
+        return db.update(TABLE_NOTES, values, KEY_ID + " = ?", new String[]{String.valueOf(note.getID())});
     }
 
     public void deleteNote(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NOTES, KEY_ID + " = ?", new String[] {String.valueOf(note.getID())});
+        db.delete(TABLE_NOTES, KEY_ID + " = ?", new String[]{String.valueOf(note.getID())});
+
+        db.close();
+    }
+
+    public void deleteNote(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NOTES, KEY_ID + " = ?", new String[]{id + ""});
 
         db.close();
     }
 
     public void deleteAllNotes() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NOTES, KEY_ID + " > ?", new String[] {"-1"});
+        db.delete(TABLE_NOTES, KEY_ID + " > ?", new String[]{"-1"});
 
         db.close();
     }
 
+    public Note getNextNote(Note note) {
+        if (note != null) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            String selectQuery = "SELECT * FROM " + TABLE_NOTES + " WHERE id > ? LIMIT 1";
+            Cursor cursor = db.rawQuery(selectQuery, new String[]{note.getID() + ""});
+
+            if (((cursor != null) && (cursor.getCount() > 0))) {
+                cursor.moveToFirst();
+
+                Log.d("CURSOR", cursor.getString(0));
+
+                Note nextNote = new Note();
+                nextNote.setID(Integer.parseInt(cursor.getString(0)));
+                nextNote.setTitle(cursor.getString(1));
+                nextNote.setText(cursor.getString(2));
+                db.close();
+                return nextNote;
+
+            } else {
+                db.close();
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public int updateOrCreate(Note note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int create = 1; // 1 = vytvoření nové poznámky, 0 = upravení poznámky
+
+        if(note.getID() > 0){
+            String selectQuery = "SELECT * FROM " + TABLE_NOTES + " WHERE id = ?";
+            Cursor cursor = db.rawQuery(selectQuery, new String[]{note.getID() + ""});
+
+            if (((cursor != null) && (cursor.getCount() > 0))) {
+                updateNote(note);
+                create = 0;
+            } else {
+                addNote(note);
+            }
+
+        } else {
+            addNote(note);
+        }
+
+        db.close();
+        return create;
+    }
 }

@@ -105,12 +105,13 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 db.deleteAllNotes();
                                 MainActivity.this.refreshList();
+                                Toast.makeText(MainActivity.this, "Poznámky byly smazány!", Toast.LENGTH_LONG).show();
+
                             }
                         });
                 builder.setNegativeButton("Zrušit", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
+                    public void onClick(DialogInterface dialog, int which) {}
                 });
 
                 AlertDialog dialog = builder.create();

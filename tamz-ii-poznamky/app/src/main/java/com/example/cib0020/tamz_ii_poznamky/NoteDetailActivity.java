@@ -1,11 +1,18 @@
 package com.example.cib0020.tamz_ii_poznamky;
 
 import android.content.Intent;
+import android.gesture.GestureOverlayView;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -13,21 +20,32 @@ public class NoteDetailActivity extends AppCompatActivity {
 
     boolean editing = false;
     Note note = null;
+    DatabaseHandler db = null;
+
+    EditText editTextTitle = null;
+    EditText editTextText = null;
+
+    private GestureDetector mGesture;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_detail);
 
+        editTextTitle = (EditText) findViewById(R.id.editText_title);
+        editTextText = (EditText) findViewById(R.id.editText_text);
+
+        db = new DatabaseHandler(this);
+
+        mGesture = new GestureDetector(this, mOnGesture);
+
         Intent intent = getIntent();
         if (intent.hasExtra("note")) {
             note = (Note) intent.getSerializableExtra("note");
-
-            TextView textViewTitle = (TextView) findViewById(R.id.editText_title);
-            TextView textViewText = (TextView) findViewById(R.id.editText_text);
-            textViewTitle.setText(note.getTitle());
-            textViewText.setText(note.getText());
-
+            this.displayNote(note);
             editing = true;
+        } else {
+            note = new Note();
         }
 
 
@@ -53,5 +71,60 @@ public class NoteDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        boolean handled = super.dispatchTouchEvent(ev);
+        handled = mGesture.onTouchEvent(ev);
+        return handled;
+    }
+
+    private GestureDetector.OnGestureListener mOnGesture = new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+
+            if (velocityX < -5000 ) { // potáhnutí doleva
+                String textTitle = editTextTitle.getText().toString();
+                String textText = editTextText.getText().toString();
+
+                if(textTitle.length() > 0 && textText.length() > 0){
+                    note.setTitle(editTextTitle.getText().toString());
+                    note.setText(editTextText.getText().toString());
+                    int created = db.updateOrCreate(note);
+
+                    if (created == 1){ // pokud se vytvořila nová ponzámka
+                        note = new Note();
+                    } else { // pokud se poznámka upravila
+                        note = db.getNextNote(note);
+                    }
+
+                    if (note != null) {
+                        NoteDetailActivity.this.displayNote(note);
+                    } else {
+                        note = new Note();
+                        NoteDetailActivity.this.displayNote(note);
+                    }
+                } else {
+                    Toast.makeText(NoteDetailActivity.this, "Prosím vyplntě všechny údaje", Toast.LENGTH_LONG).show();
+                }
+
+
+            } else if (velocityX > 5000) { // potáhnutí doprava
+                
+            }
+
+            return true;
+        }
+    };
+
+    private void displayNote(Note note) {
+        TextView textViewTitle = (TextView) findViewById(R.id.editText_title);
+        TextView textViewText = (TextView) findViewById(R.id.editText_text);
+        textViewTitle.setText(note.getTitle());
+        textViewText.setText(note.getText());
     }
 }
