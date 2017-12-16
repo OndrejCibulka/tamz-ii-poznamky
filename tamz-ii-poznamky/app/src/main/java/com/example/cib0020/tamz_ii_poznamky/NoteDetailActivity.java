@@ -86,35 +86,10 @@ public class NoteDetailActivity extends AppCompatActivity {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 
-
             if (velocityX < -5000 ) { // potáhnutí doleva
-                String textTitle = editTextTitle.getText().toString();
-                String textText = editTextText.getText().toString();
-
-                if(textTitle.length() > 0 && textText.length() > 0){
-                    note.setTitle(editTextTitle.getText().toString());
-                    note.setText(editTextText.getText().toString());
-                    int created = db.updateOrCreate(note);
-
-                    if (created == 1){ // pokud se vytvořila nová ponzámka
-                        note = new Note();
-                    } else { // pokud se poznámka upravila
-                        note = db.getNextNote(note);
-                    }
-
-                    if (note != null) {
-                        NoteDetailActivity.this.displayNote(note);
-                    } else {
-                        note = new Note();
-                        NoteDetailActivity.this.displayNote(note);
-                    }
-                } else {
-                    Toast.makeText(NoteDetailActivity.this, "Prosím vyplntě všechny údaje", Toast.LENGTH_LONG).show();
-                }
-
-
+                dispayNextNote();
             } else if (velocityX > 5000) { // potáhnutí doprava
-                
+                displayPreviousNote();
             }
 
             return true;
@@ -126,5 +101,56 @@ public class NoteDetailActivity extends AppCompatActivity {
         TextView textViewText = (TextView) findViewById(R.id.editText_text);
         textViewTitle.setText(note.getTitle());
         textViewText.setText(note.getText());
+    }
+
+    private void dispayNextNote(){ // ta, co je více vpravo
+        String textTitle = editTextTitle.getText().toString();
+        String textText = editTextText.getText().toString();
+
+        if(textTitle.length() > 0 && textText.length() > 0){
+            note.setTitle(editTextTitle.getText().toString());
+            note.setText(editTextText.getText().toString());
+            int created = db.updateOrCreate(note);
+
+            if (created == 1){ // pokud se vytvořila nová ponzámka
+                note = new Note();
+            } else { // pokud se poznámka upravila
+                note = db.getNextNote(note);
+            }
+
+            if (note != null) {
+                NoteDetailActivity.this.displayNote(note);
+            } else {
+                note = new Note();
+                NoteDetailActivity.this.displayNote(note);
+            }
+        } else {
+            Toast.makeText(NoteDetailActivity.this, "Prosím vyplntě všechny údaje", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void displayPreviousNote(){ // ta, co je více vlevo
+        String textTitle = editTextTitle.getText().toString();
+        String textText = editTextText.getText().toString();
+
+        if(textTitle.length() > 0 && textText.length() > 0) {
+            Log.d("onMoveRight", "Moved to right");
+            note.setTitle(editTextTitle.getText().toString());
+            note.setText(editTextText.getText().toString());
+//            int created = db.updateOrCreate(note);
+
+            // TODO updateOrCreate až po ověření, jestli je nová, nebo ne
+
+            if (db.getPreviousNote(note) != null) { // pokud tato poznámka NENÍ první v databázi
+                note = db.getPreviousNote(note);
+                //note = db.getPreviousNote(note); // je potřeba získat předchozí 2x, protože poprvé je poslední tato aktuální
+                Log.d("onMoveRight", "44, id: " + note.getID());
+                NoteDetailActivity.this.displayNote(note);
+            } else {
+                Toast.makeText(NoteDetailActivity.this, "Jste na první poznámce", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(NoteDetailActivity.this, "Prosím vyplntě všechny údaje", Toast.LENGTH_LONG).show();
+        }
     }
 }

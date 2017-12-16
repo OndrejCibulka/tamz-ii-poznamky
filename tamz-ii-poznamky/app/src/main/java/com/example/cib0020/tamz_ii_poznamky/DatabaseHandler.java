@@ -128,8 +128,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             if (((cursor != null) && (cursor.getCount() > 0))) {
                 cursor.moveToFirst();
 
-                Log.d("CURSOR", cursor.getString(0));
-
                 Note nextNote = new Note();
                 nextNote.setID(Integer.parseInt(cursor.getString(0)));
                 nextNote.setTitle(cursor.getString(1));
@@ -138,6 +136,44 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 return nextNote;
 
             } else {
+                db.close();
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public Note getPreviousNote(Note note) {
+        if (note != null) {
+            Log.d("onMoveRight", "We have some note! ID: " + note.getID());
+            SQLiteDatabase db = this.getWritableDatabase();
+            String selectQuery = "";
+            Cursor cursor;
+
+            if(note.getID() == 0){ // pokud máme novou aktualitu, tak chceme získat poslední záznam z db
+                Log.d("onMoveRight", "ID is 0");
+                selectQuery = "SELECT * FROM " + TABLE_NOTES + " ORDER BY ID DESC LIMIT 1";
+                cursor = db.rawQuery(selectQuery,null);
+            } else {
+                Log.d("onMoveRight", "ID is NOT 0");
+                selectQuery = "SELECT * FROM " + TABLE_NOTES + " WHERE id < ? ORDER BY ID DESC LIMIT 1";
+                cursor = db.rawQuery(selectQuery, new String[]{note.getID() + ""});
+            }
+
+            if (((cursor != null) && (cursor.getCount() > 0))) {
+                Log.d("onMoveRight", "We have got something in cursor!");
+                cursor.moveToFirst();
+
+                Note prevNote = new Note();
+                prevNote.setID(Integer.parseInt(cursor.getString(0)));
+                prevNote.setTitle(cursor.getString(1));
+                prevNote.setText(cursor.getString(2));
+                db.close();
+                return prevNote;
+
+            } else {
+                Log.d("onMoveRight", "Cursor is empty, but why?");
                 db.close();
                 return null;
             }
