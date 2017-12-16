@@ -4,4 +4,5 @@
 
     <item android:id="@+id/delete_all" android:title="Smazat vše" />
     <item android:id="@+id/show_graph" android:title="Zobrazit graf" />
+    <item android:id="@+id/show_settings" android:title="Nastavení" />
 </menu>

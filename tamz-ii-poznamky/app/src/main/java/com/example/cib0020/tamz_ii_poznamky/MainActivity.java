@@ -4,6 +4,7 @@ package com.example.cib0020.tamz_ii_poznamky;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -44,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, NoteDetailActivity.class);
                 startActivityForResult(intent, NOTE_DETAIL_REQUEST);
-
             }
         });
 
@@ -115,11 +115,16 @@ public class MainActivity extends AppCompatActivity {
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
-
                 return true;
+
             case R.id.show_graph:
                 Intent intent = new Intent(MainActivity.this, GraphActivity.class);
                 startActivity(intent);
+                return true;
+
+            case R.id.show_settings:
+                Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(settings);
                 return true;
 
             default:
