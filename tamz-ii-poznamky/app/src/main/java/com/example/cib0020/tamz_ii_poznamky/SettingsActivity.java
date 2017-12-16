@@ -21,8 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
         final Switch switchAllowAccelerometer = (Switch) findViewById(R.id.switch_allow_accelerometer);
         final SeekBar seekBarAccelerometerValue = (SeekBar) findViewById(R.id.seekBar_accelerometer_value);
 
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        String highScore = sharedPref.getString("test-key", "a");
+        SharedPreferences sharedPref = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
 
         switchAllowAccelerometer.setChecked(sharedPref.getBoolean("acc-allow", true));
         seekBarAccelerometerValue.setProgress(sharedPref.getInt("acc-value", 15));
@@ -30,7 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPref =  SettingsActivity.this.getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences sharedPref =  SettingsActivity.this.getSharedPreferences("settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
 
                 editor.putBoolean("acc-allow", switchAllowAccelerometer.isChecked());

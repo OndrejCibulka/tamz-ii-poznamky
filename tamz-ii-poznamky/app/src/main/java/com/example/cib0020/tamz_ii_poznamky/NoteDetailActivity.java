@@ -1,6 +1,8 @@
 package com.example.cib0020.tamz_ii_poznamky;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.gesture.GestureOverlayView;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +36,9 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
 
     private Sensor mySensor;
     private SensorManager SM;
+
+    private boolean accAllow = true;
+    private int accValue = 15;
 
     long last = System.currentTimeMillis();
 
@@ -80,6 +85,16 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
                 finish();
             }
         });
+
+        new Thread(new Runnable() {
+            public void run() {
+                SharedPreferences sharedPref = getSharedPreferences("settings", Context.MODE_PRIVATE);
+
+                accAllow = sharedPref.getBoolean("acc-allow", false);
+                accValue = sharedPref.getInt("acc-value", 15);
+                Log.d("moje", accAllow + "");
+            }
+        }).start();
 
 
 //      nastavení senzorů
@@ -169,19 +184,22 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        long now = System.currentTimeMillis();
+        if(accAllow == true)
+        {
+            long now = System.currentTimeMillis();
 
-        if(sensorEvent.values[0] < -15) // pohnutí doprava
-        {
-            if ((now - last) > 1000) {
-                displayPreviousNote();
-                last = now;
-            }
-        } else if (sensorEvent.values[0] > 15) // pohnutí doleva
-        {
-            if ((now - last) > 1000) {
-                dispayNextNote();
-                last = now;
+            if(sensorEvent.values[0] < accValue*(-1)) // pohnutí doprava
+            {
+                if ((now - last) > 1000) {
+                    displayPreviousNote();
+                    last = now;
+                }
+            } else if (sensorEvent.values[0] > accValue) // pohnutí doleva
+            {
+                if ((now - last) > 1000) {
+                    dispayNextNote();
+                    last = now;
+                }
             }
         }
 
