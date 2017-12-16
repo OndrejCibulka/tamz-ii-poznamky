@@ -14,9 +14,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+
 import org.w3c.dom.Text;
 
-public class NoteDetailActivity extends AppCompatActivity {
+public class NoteDetailActivity extends AppCompatActivity implements  SensorEventListener {
 
     boolean editing = false;
     Note note = null;
@@ -26,6 +31,9 @@ public class NoteDetailActivity extends AppCompatActivity {
     EditText editTextText = null;
 
     private GestureDetector mGesture;
+
+    private Sensor mySensor;
+    private SensorManager SM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +55,6 @@ public class NoteDetailActivity extends AppCompatActivity {
         } else {
             note = new Note();
         }
-
 
         Button buttonSave = (Button) findViewById(R.id.button_save);
         buttonSave.setOnClickListener( new View.OnClickListener() {
@@ -73,6 +80,10 @@ public class NoteDetailActivity extends AppCompatActivity {
         });
 
 
+//      nastavení senzorů
+        SM = (SensorManager)getSystemService(SENSOR_SERVICE);
+        mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        SM.registerListener(this, mySensor, 1000000);
     }
 
     @Override
@@ -152,5 +163,22 @@ public class NoteDetailActivity extends AppCompatActivity {
         } else {
             Toast.makeText(NoteDetailActivity.this, "Prosím vyplntě všechny údaje", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+
+        if(sensorEvent.values[0] < -15) // pohnutí doprava
+        {
+            displayPreviousNote();
+        } else if (sensorEvent.values[0] > 15) // pohnutí doleva
+        {
+            dispayNextNote();
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
     }
 }
