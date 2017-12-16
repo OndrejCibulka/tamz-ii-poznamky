@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 //      Toast.makeText(this, note.getTitle(), Toast.LENGTH_LONG).show();
 
         Button clickButton = (Button) findViewById(R.id.button_add_note);
-        clickButton.setOnClickListener( new View.OnClickListener() {
+        clickButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, NoteDetailActivity.class);
@@ -62,25 +62,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if(resultCode == MainActivity.NOTE_DETAIL_REQUEST){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == MainActivity.NOTE_DETAIL_REQUEST) {
             Toast.makeText(this, "Poznámka byla uložena!", Toast.LENGTH_LONG).show();
             MainActivity.this.refreshList();
         }
     }
 
-    private void refreshList(){
+    private void refreshList() {
         ListView lv = (ListView) findViewById(R.id.listView_notes);
         DatabaseHandler db = new DatabaseHandler(this);
 
         listNotes = db.getAllNotes();
         List<String> your_array_list = new ArrayList<String>();
-        for(int i = 0; i < listNotes.size();i++){
-            your_array_list.add(listNotes.get(i).getTitle()+"");
+        for (int i = 0; i < listNotes.size(); i++) {
+            your_array_list.add(listNotes.get(i).getTitle() + "");
         }
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, your_array_list );
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, your_array_list);
         lv.setAdapter(arrayAdapter);
     }
 
@@ -111,15 +110,22 @@ public class MainActivity extends AppCompatActivity {
                         });
                 builder.setNegativeButton("Zrušit", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {}
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
                 });
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
                 return true;
+            case R.id.show_graph:
+                Intent intent = new Intent(MainActivity.this, GraphActivity.class);
+                startActivity(intent);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 }
+
