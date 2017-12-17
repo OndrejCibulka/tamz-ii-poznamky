@@ -70,19 +70,25 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
                 TextView textViewTitle = (TextView) findViewById(R.id.editText_title);
                 TextView textViewText = (TextView) findViewById(R.id.editText_text);
 
-                DatabaseHandler db = new DatabaseHandler(NoteDetailActivity.this);
+                if(textViewTitle.getText().length() > 0 && textViewText.getText().length() > 0)
+                {
+                    DatabaseHandler db = new DatabaseHandler(NoteDetailActivity.this);
 
-                if (editing) {
-                    note.setTitle(textViewTitle.getText().toString());
-                    note.setText(textViewText.getText().toString());
-                    db.updateNote(note);
+                    if (editing) {
+                        note.setTitle(textViewTitle.getText().toString());
+                        note.setText(textViewText.getText().toString());
+                        db.updateNote(note);
+                    } else {
+                        Note note = new Note(1, textViewTitle.getText().toString(), textViewText.getText().toString());
+                        db.addNote(note);
+                    }
+
+                    Toast.makeText(NoteDetailActivity.this, "Poznámka byla uložena!", Toast.LENGTH_LONG).show();
+                    setResult(0);
+                    finish();
                 } else {
-                    Note note = new Note(1, textViewTitle.getText().toString(), textViewText.getText().toString());
-                    db.addNote(note);
+                    Toast.makeText(NoteDetailActivity.this, "Prosím, vyplňte všechny údaje", Toast.LENGTH_LONG).show();
                 }
-
-                setResult(0);
-                finish();
             }
         });
 
@@ -142,6 +148,7 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
 
             if (created == 1){ // pokud se vytvořila nová ponzámka
                 note = new Note();
+                Toast.makeText(NoteDetailActivity.this, "Nová poznámka byla vytvořena!", Toast.LENGTH_LONG).show();
             } else { // pokud se poznámka upravila
                 note = db.getNextNote(note);
             }
@@ -153,7 +160,7 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
                 NoteDetailActivity.this.displayNote(note);
             }
         } else {
-            Toast.makeText(NoteDetailActivity.this, "Prosím vyplntě všechny údaje", Toast.LENGTH_LONG).show();
+            Toast.makeText(NoteDetailActivity.this, "Prosím, vyplňte všechny údaje", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -165,20 +172,23 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
             Log.d("onMoveRight", "Moved to right");
             note.setTitle(editTextTitle.getText().toString());
             note.setText(editTextText.getText().toString());
-//            int created = db.updateOrCreate(note);
 
-            // TODO updateOrCreate až po ověření, jestli je nová, nebo ne
+            Note oldNote = note;
 
             if (db.getPreviousNote(note) != null) { // pokud tato poznámka NENÍ první v databázi
                 note = db.getPreviousNote(note);
-                //note = db.getPreviousNote(note); // je potřeba získat předchozí 2x, protože poprvé je poslední tato aktuální
                 Log.d("onMoveRight", "44, id: " + note.getID());
                 NoteDetailActivity.this.displayNote(note);
             } else {
                 Toast.makeText(NoteDetailActivity.this, "Jste na první poznámce", Toast.LENGTH_LONG).show();
             }
+
+            int created = db.updateOrCreate(oldNote);
+            if(created == 1){
+                Toast.makeText(NoteDetailActivity.this, "Nová poznámka byla vytvořena!", Toast.LENGTH_LONG).show();
+            }
         } else {
-            Toast.makeText(NoteDetailActivity.this, "Prosím vyplntě všechny údaje", Toast.LENGTH_LONG).show();
+            Toast.makeText(NoteDetailActivity.this, "Prosím, vyplňte všechny údaje", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -202,7 +212,6 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
                 }
             }
         }
-
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Parcelable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,7 +25,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int NOTE_DETAIL_REQUEST = 0;
     DatabaseHandler db = null;
 
     List<Note> listNotes;
@@ -37,14 +37,13 @@ public class MainActivity extends AppCompatActivity {
         db = new DatabaseHandler(this);
         this.refreshList();
 
-//      Toast.makeText(this, note.getTitle(), Toast.LENGTH_LONG).show();
-
-        Button clickButton = (Button) findViewById(R.id.button_add_note);
-        clickButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton buttonAdd = (FloatingActionButton) findViewById(R.id.floatingActionButton_add);
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, NoteDetailActivity.class);
-                startActivityForResult(intent, NOTE_DETAIL_REQUEST);
+                startActivityForResult(intent, 0);
+//                startActivity(intent);
             }
         });
 
@@ -54,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, NoteDetailActivity.class);
                 intent.putExtra("note", (Serializable) listNotes.get(position));
-                startActivityForResult(intent, NOTE_DETAIL_REQUEST);
+                startActivityForResult(intent, 0);
+//                startActivity(intent);
             }
         });
 
@@ -62,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == MainActivity.NOTE_DETAIL_REQUEST) {
-            Toast.makeText(this, "Poznámka byla uložena!", Toast.LENGTH_LONG).show();
+        if (resultCode == 0) {
             MainActivity.this.refreshList();
         }
     }
