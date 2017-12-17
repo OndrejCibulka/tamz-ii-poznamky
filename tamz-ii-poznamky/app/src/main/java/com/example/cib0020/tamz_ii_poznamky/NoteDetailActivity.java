@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -160,7 +161,7 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
                 NoteDetailActivity.this.displayNote(note);
             }
         } else {
-            Toast.makeText(NoteDetailActivity.this, "Prosím, vyplňte všechny údaje", Toast.LENGTH_LONG).show();
+            Toast.makeText(NoteDetailActivity.this, "Prosím, vyplňte všechny údaje b", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -188,12 +189,13 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
                 Toast.makeText(NoteDetailActivity.this, "Nová poznámka byla vytvořena!", Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(NoteDetailActivity.this, "Prosím, vyplňte všechny údaje", Toast.LENGTH_LONG).show();
+            Toast.makeText(NoteDetailActivity.this, "Prosím, vyplňte všechny údaje a", Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+        Log.d("accAllow", accAllow + "");
         if(accAllow == true)
         {
             long now = System.currentTimeMillis();
@@ -217,5 +219,12 @@ public class NoteDetailActivity extends AppCompatActivity implements  SensorEven
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.setResult(0);
+        this.finish();
     }
 }
