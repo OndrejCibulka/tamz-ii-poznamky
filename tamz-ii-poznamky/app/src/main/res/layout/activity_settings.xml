@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.cib0020.tamz_ii_poznamky.SettingsActivity">
 
     <Switch
         android:id="@+id/switch_allow_accelerometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Povolit akcelerometr"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar_accelerometer_value"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Povolit akcelerometr" />
 
-    <SeekBar
-        android:id="@+id/seekBar_accelerometer_value"
-        android:layout_width="228dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="120dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:max="20"
-        android:progress="15"
-        app:layout_constraintBottom_toTopOf="@+id/button_save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingRight="10dp">
+
+        <SeekBar
+            android:id="@+id/seekBar_accelerometer_value"
+            android:layout_width="265dp"
+            android:layout_height="50dp"
+            android:layout_column="0"
+            android:layout_row="1"
+            android:layout_weight="1"
+            android:max="20"
+            android:progress="15" />
+
+        <TextView
+            android:id="@+id/textView_accelerometer_value"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="TextView"
+            android:textAlignment="center" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_save"
-        android:layout_width="195dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Uložit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_column="0"
+        android:layout_row="26"
+        android:text="Uložit" />
+</GridLayout>
